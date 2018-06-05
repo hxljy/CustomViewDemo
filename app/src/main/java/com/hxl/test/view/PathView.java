@@ -19,6 +19,7 @@ public class PathView extends View {
 
     Paint paint = new Paint();
     Path path = new Path(); // 初始化 Path 对象
+    Path path1 = new Path(); // 贝塞尔曲线
 
     public PathView(Context context) {
         super(context);
@@ -34,10 +35,20 @@ public class PathView extends View {
 
     {
 
-        // 使用 path 对图形进行描述（这段描述代码不必看懂）
-        path.addArc(200, 200, 400, 400, -225, 225);
-        path.arcTo(400, 200, 600, 400, -180, 225, false);
-        path.lineTo(400, 542);
+        // 使用 path 描述心形
+        path.addArc(150, 150, 350, 350, -225, 225);//两个扇形
+        path.arcTo(350, 150, 550, 350, -180, 225, false);
+        path.lineTo(350, 492);
+        path.close();
+
+        //描述五角星
+        path.setFillType(Path.FillType.EVEN_ODD);
+        path.moveTo(100, 800);
+        path.lineTo(600, 800);
+        path.lineTo(170, 1130);
+        path.lineTo(350, 620);
+        path.lineTo(490, 1130);
+        path.close();
     }
 
     @Override
@@ -45,9 +56,16 @@ public class PathView extends View {
         super.onDraw(canvas);
 
         paint.setAntiAlias(true);
-//        paint.setStyle(Paint.Style.STROKE);
+        paint.setStyle(Paint.Style.FILL);
         canvas.drawPath(path, paint); // 绘制出 path 描述的图形（心形），大功告成
 
 
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        // TODO Auto-generated method stub
+        // super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        setMeasuredDimension(widthMeasureSpec, 3000);//动态设置宽高
     }
 }
